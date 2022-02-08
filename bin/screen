@@ -1,0 +1,24 @@
+#!/usr/bin/env ruby
+require 'pry'
+
+ARGV.each_with_index do |argument, index|
+  if ['-x', '-S'].include?(argument) && (session_name = ARGV[index + 1])
+    system("echo '\033k#{session_name}\033\\'");
+  end
+end
+
+screen_command_parts = ['/usr/bin/screen'].concat(ARGV)
+
+if ARGV.any? { |argument| argument.eql?('-S') }
+  # This environment variable will remain through the screen session so that
+  # when a new window/shell is created, .bashrc will cd into the directory
+  # where the screen was started.
+  screen_command_parts.unshift("SCREENPWD=#{Dir.pwd}")
+end
+
+screen_command = screen_command_parts.join(' ')
+
+puts "Executing #{screen_command.inspect}"
+
+puts `#{screen_command}`
+exit $?.exitstatus

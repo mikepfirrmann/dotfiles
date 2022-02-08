@@ -1,0 +1,35 @@
+[filter "media"]
+	required = true
+	clean = git media clean %f
+	smudge = git media smudge %f
+[user]
+	name = Mike Pfirrmann
+	email = mikenjss@gmail.com
+[push]
+	default = matching
+[filter "hawser"]
+	clean = git hawser clean %f
+	smudge = git hawser smudge %f
+	required = true
+[filter "lfs"]
+	clean = git lfs clean %f
+	smudge = git lfs smudge %f
+	required = true
+[alias]
+	co = checkout
+	br = branch
+	ci = commit
+	st = status
+  bump = "!f () { echo \"bumping: $*\"; git commit $* -m \"bump $*\"; }; f"
+	last = log -1 HEAD
+[gitflow "feature.finish"]
+  push = true
+[gitflow "bugfix.finish"]
+  push = true
+[gitflow "hotfix.finish"]
+  push = true
+[gitflow "release.finish"]
+  push = true
+[pull]
+	rebase = false
+	merge = true

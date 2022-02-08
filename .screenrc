@@ -1,0 +1,26 @@
+defscrollback 100000
+
+# Allow scrolling.
+termcapinfo xterm ti@:te@
+
+# Add status line
+shell -${SHELL}
+startup_message off
+
+termcapinfo xterm*|Eterm|mlterm "hs:ts=\E]0;:fs=\007:ds=\E]0;screen\007"
+hardstatus off
+hardstatus string "screen %n (%t)%? [%h]%?"
+
+
+hardstatus on
+
+# See http://aperiodic.net/screen/man:string_escapes for tokens
+hardstatus alwayslastline '%{= kG}[ %{G}%H %{g}][%= %{= kw}%?%-Lw%?%{r}(%{W}%n*%f%t%?(%u)%?%{r})%{w}%?%+Lw%?%?%= %{g}][%{B} %D, %M %d %{W}%C:%s%a %{g}]'
+
+# Set up default windows
+screen -t E 4
+screen -t D 3
+screen -t C 2
+screen -t B 1
+screen -t A 0
+

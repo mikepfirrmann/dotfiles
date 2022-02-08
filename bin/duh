@@ -1,0 +1,1 @@
+du -x -d 1 | sort -n | awk '{ print $2 }' | xargs du -hx -d 0
