@@ -1,1 +1,2 @@
 export RUBY_CONFIGURE_OPTS="--with-readline-dir=/usr/lib"
+export PATH="$PATH:$HOME/.rvm/bin"

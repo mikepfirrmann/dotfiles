@@ -70,9 +70,9 @@ fi
 # enable programmable completion features (you don't need to enable
 # this, if it's already enabled in /etc/bash.bashrc and /etc/profile
 # sources /etc/bash.bashrc).
-if [ -f /etc/bash_completion ] && ! shopt -oq posix; then
-    . /etc/bash_completion
-fi
+# if [ -f /etc/bash_completion ] && ! shopt -oq posix; then
+#     . /etc/bash_completion
+# fi
 
 # Add autocompletion for screen session names
 complete -C "perl -e '@w=split(/ /,\$ENV{COMP_LINE},-1);\$w=pop(@w);for(qx(screen -ls)){print qq/\$1\n/ if (/^\s*\$w/&&/(\d+\.\w+)/||/\d+\.(\$w\w*)/)}'" screen
@@ -82,6 +82,10 @@ PATH=$JAVA_HOME/bin:$PATH
 
 PATH="/usr/local/bin:$PATH"
 PATH="$HOME/bin:$HOME/bin/utilities:$PATH"
+
+# per clockwork_web requirements
+PATH="/usr/local/opt/mysql@5.7/bin:$PATH"
+LIBRARY_PATH=$LIBRARY_PATH:/usr/local/opt/openssl/lib/
 
 export JAVA_HOME PATH
 
@@ -95,11 +99,16 @@ if [ -f ~/.bash_environment ]; then
  . ~/.bash_environment
  fi
 
+# Brave's Justworks dev tool
+source ~/src/github.com/justworkshr/dev/dev.sh
+
 EDITOR='subl'
 
-eval "$(rbenv init -)"
+eval "$(rbenv init - sh)"
+# [[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*
 
 export BASH_SILENCE_DEPRECATION_WARNING=1
 export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+[ -s "$(brew --prefix)/opt/nvm/nvm.sh" ] && . "$(brew --prefix)/opt/nvm/nvm.sh" # This loads nvm
+[ -s "$(brew --prefix)/opt/nvm/etc/bash_completion.d/nvm" ] && . "$(brew --prefix)/opt/nvm/etc/bash_completion.d/nvm" # This loads nvm bash_completion
+source /opt/secrets/current/dev_env_exports.sh
